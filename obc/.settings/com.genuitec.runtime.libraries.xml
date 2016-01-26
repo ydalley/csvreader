@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project adv-config="true">
+  <add-on id="spring.persistence"/>
+  <add-on id="web.struts2.spring"/>
+  <add-on id="spring.web"/>
+  <add-on id="web.struts2.config-browser"/>
+  <container path="com.genuitec.runtime.library/com.genuitec.struts_2.1">
+    <disable name="antlr-2.7.2.jar" type="jar"/>
+  </container>
+  <container path="com.genuitec.runtime.library/com.genuitec.spring_4.1">
+    <jar-attrs id="data/4.1.0/dist/spring-aop-4.1.0.RELEASE.jar">
+      <attribute name="javadoc_location" value="http://docs.spring.io/spring/docs/4.1.0.RELEASE/javadoc-api/"/>
+      <attribute name="source-path-root"/>
+      <attribute name="source-path" value="/Users/dallex/Downloads/src_jars/spring-aop-4.1.0.RELEASE-sources.jar"/>
+    </jar-attrs>
+    <jar-attrs id="data/4.1.0/dist/spring-tx-4.1.0.RELEASE.jar">
+      <attribute name="javadoc_location" value="http://docs.spring.io/spring/docs/4.1.0.RELEASE/javadoc-api/"/>
+      <attribute name="source-path-root"/>
+      <attribute name="source-path" value="/Users/dallex/Downloads/src_jars/spring-tx-4.1.0.RELEASE-sources.jar"/>
+    </jar-attrs>
+  </container>
+</project>

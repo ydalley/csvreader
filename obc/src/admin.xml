@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="admin" namespace="/admin" extends="default">
+		<interceptors>
+			<interceptor name="authenticationInterceptor"
+				class="com.ebsl.base.struts.interceptors.AuthenticationInterceptor" />
+			<interceptor-stack name="basicSecureStack">
+				<interceptor-ref name="authenticationInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="defaultStack" />
+		<action name="obc">
+			<result>admin/index.jsp</result>
+		</action>
+
+		
+
+		<!-- Add actions here -->
+	</package>
+</struts>
