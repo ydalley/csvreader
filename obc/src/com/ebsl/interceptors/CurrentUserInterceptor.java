@@ -23,13 +23,15 @@ import com.ebsl.data.model.User;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class CurrentUserInterceptor implements Interceptor
 {
-    private static transient final Logger LOGGER = LoggerFactory.getLogger(CurrentShiroUserInterceptor.class);
+    private static transient final Logger LOGGER = LoggerFactory.getLogger(CurrentUserInterceptor.class);
 
     public void destroy()
     {
@@ -41,12 +43,19 @@ public class CurrentUserInterceptor implements Interceptor
 
     public String intercept(ActionInvocation actionInvocation) throws Exception
     {
-        Map session = actionInvocation.getInvocationContext().getSession();
-        User user = (User) session.get( User.USER );
-        if (actionInvocation instanceof UserAware) {
-	        ((UserAware)actionInvocation).setUser(user);
-	        
-	    }
+    	try {
+			Subject shiroUser = SecurityUtils.getSubject();
+			User user = (User) shiroUser.getPrincipal() ;
+			LOGGER.debug("Getting {"+ user+"} ");
+			Object action = actionInvocation.getAction();
+			actionInvocation.getStack().set("loggedOnUser", user);
+			if (action instanceof UserAware) {
+			    ((UserAware)action).setCurrentUser(user);
+			    
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	    
         return actionInvocation.invoke();
     }

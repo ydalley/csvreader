@@ -1,40 +1,25 @@
 package com.ebsl.actions.admin;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.interceptor.ParameterAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.ebsl.actions.UserAware;
-import com.ebsl.data.model.Profile;
 import com.ebsl.data.model.User;
 import com.ebsl.service.OBCException;
 import com.ebsl.service.SecurityService;
 import com.ebsl.service.UserService;
-import com.ebsl.utils.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.Preparable;
-import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Controller
@@ -52,6 +37,7 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 	private String password;
 	private String newPassword;
 	private String newPassword2;
+	private String jsonString;
 
 	@Autowired
 	private UserService userservice;
@@ -60,8 +46,9 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 
 	private Map<String, String[]> params;
 
+	@Override
 	@Action(value = "/admin/preferences/password", results = { @Result(name = "input", location = "/admin/preferences-password.jsp") })
-	public String execute() throws Exception {
+	public String input() throws Exception {
 		return "input";
 	}
 
@@ -112,10 +99,19 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 		return newPassword2;
 	}
 
+	public String getJsonString() {
+		return jsonString;
+	}
+
 	@RequiredStringValidator(message = "Confirm New Password is required", shortCircuit = false)
-	@ExpressionValidator(expression = "newPassword == newPassword2")
+	@ExpressionValidator(message = "Confirm that your passwords match", expression = "newPassword == newPassword2")
 	public void setNewPassword2(String newPassword2) {
 		this.newPassword2 = newPassword2;
+	}
+
+	@Override
+	public void setCurrentUser(User user) {
+		setUser(user);
 	}
 
 }

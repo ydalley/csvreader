@@ -14,7 +14,6 @@
 			<div class="alert alert-danger alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<s:actionerror />
-				<a href="#" class="alert-link">Alert Link</a>.
 			</div>
 		</s:if>
 		<s:if test="hasActionMessages()">

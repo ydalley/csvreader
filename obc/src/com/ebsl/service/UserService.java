@@ -11,7 +11,7 @@ public interface UserService {
 	
 	PageBean getAllUsers(int max, int record);
 	PageBean findUser(String pattern,int max, int record);
-	User  getCurrentUser();
+//	User  getCurrentUser();
 	User getUserForLoginByName(String userId);
 	String modify(User user, User editor) throws OBCException;
 	String add(User user, User editor) throws OBCException;

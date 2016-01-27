@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.ebsl.actions.UserAware;
 import com.ebsl.data.model.Profile;
 import com.ebsl.data.model.User;
 import com.ebsl.service.OBCException;
@@ -31,6 +32,10 @@ import com.ebsl.service.UserService;
 import com.ebsl.utils.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 @Controller
 @Scope("prototype")
@@ -38,7 +43,7 @@ import com.opensymphony.xwork2.Preparable;
 @ParentPackage("obc")
 @Results({ @Result(name = "error", location = "/admin/users-index.jsp") })
 public class UsersAction extends ActionSupport implements Preparable,
-		ParameterAware {
+		ParameterAware , UserAware{
 
 	private static final Logger log = LogManager.getLogger(UsersAction.class);
 
@@ -55,6 +60,8 @@ public class UsersAction extends ActionSupport implements Preparable,
 	private SecurityService securityservice;
 
 	private Map<String, String[]> params;
+
+	private User currentUser;
 
 	// GET /users/1
 	@Action(value = "/admin/users/show",results = {@Result(name="show",location="/admin/users-show.jsp")})
@@ -126,13 +133,22 @@ public class UsersAction extends ActionSupport implements Preparable,
 		return "success";
 	}
 
-	@Action(value = "/admin/users/create",results = {@Result(name="error",location="/admin/users-editNew.jsp"),
+	@Action(value = "/admin/users/create",results = {@Result(name="input",location="/admin/users-editNew.jsp"),
 			@Result(name="success",location="/admin/users-index.jsp")})
 	@RequiresPermissions(value="create:user")
+	@Validations(
+            requiredStrings ={
+            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", message = "You must enter a value for First Name."),
+            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName", message = "You must enter a value for Last Name."),
+            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.loginId", message = "You must enter a value for Login ID.")},
+            emails =
+                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a value for email.")}
+           
+    )
 	public String create() {
 		log.debug("Create new user {}", user);
 		try {
-			userservice.add(user, null);
+			userservice.add(user, currentUser);
 			addActionMessage("New User created successfully");
 			return "success";
 		} catch (OBCException e) {
@@ -140,23 +156,31 @@ public class UsersAction extends ActionSupport implements Preparable,
 			addActionError("Error creating User:" + e.getMessage());
 		}
 		
-		return "error";
+		return "input";
 
 	}
 
-	// PUT /orders/1
-	@Action(value = "/admin/users/update",results = {@Result(name="error",location="/admin/users-edit.jsp"),
+	@Validations(
+            requiredStrings ={
+            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", message = "You must enter a value for First Name."),
+            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName", message = "You must enter a value for Last Name."),
+            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.loginId", message = "You must enter a value for Login ID.")},
+            emails =
+                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a value for email.")}
+           
+    )
+	@Action(value = "/admin/users/update",results = {@Result(name="input",location="/admin/users-edit.jsp"),
 			@Result(name="success",location="/admin/users-index.jsp")})
 	@RequiresPermissions(value="update:user")
 	public String update() {
 		try {
-			userservice.modify(user, null);
+			userservice.modify(user, currentUser);
 			addActionMessage("User updated successfully");
 		} catch (OBCException e) {
 			// TODO Auto-generated catch block
 			addActionError("Failed to update User");
 			e.printStackTrace();
-			return "error";
+			return "input";
 		}
 		return "success";
 	}
@@ -166,16 +190,20 @@ public class UsersAction extends ActionSupport implements Preparable,
 	@Action(value = "/admin/users/enable",results = {@Result(name="error",location="/admin/users-index.jsp"),
 			@Result(name="success",location="/admin/users-index.jsp")})
 	@RequiresPermissions(value="enable:user")
+	
 	public String enable() {
 		try {
 			String status = user.getStatus();
-			if(status.equals("E")){
+			if(StringUtils.isEmpty(status)){
+				status = "D";
+			}
+			else if(status.equals("E")){
 				status = "D";
 			}else if(status.equals("D")){
 				status = "E";
 			}
 			user.setStatus(status);
-			userservice.modify(user, null);
+			userservice.modify(user, currentUser);
 			addActionMessage("User enabled successfully");
 		} catch (OBCException e) {
 			// TODO Auto-generated catch block
@@ -245,6 +273,11 @@ public class UsersAction extends ActionSupport implements Preparable,
 
 	public PageBean getPagebean() {
 		return pagebean;
+	}
+
+	@Override
+	public void setCurrentUser(User user) {
+		currentUser = user;
 	}
 
 }

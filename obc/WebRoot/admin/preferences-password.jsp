@@ -10,14 +10,31 @@
 					<div class="alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<s:actionerror />
-						<a href="#" class="alert-link">Alert Link</a>.
+						<s:fielderror />
+						
+					</div>
+						
+				</s:if>
+				<s:if test="hasFieldErrors()">
+						<div hidden="hidden">
+							<ul id="fielderrors">
+								<s:iterator value="fieldErrors.keySet()" var="field">
+								<li>${field}</li>
+								</s:iterator>
+							</ul>
+						</div>
+						</s:if>
+				<s:if test="hasFieldErrors()">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<s:fielderror />
+						
 					</div>
 				</s:if>
 				<s:if test="hasActionMessages()">
 					<div class="alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<s:actionmessage />
-						<a href="#" class="alert-link">Alert Link</a>.
 					</div>
 				</s:if>
 				<s:form role="form" action="password-reset" method="post" id="form-save">
@@ -28,13 +45,13 @@
 
 
 							<div class="form-group col-lg-6">
-								<label>Old Password</label> <input class="form-control" placeholder="Password" name="preferences.password" type="password" value="">
+								<label>Old Password</label> <input class="form-control" placeholder="Password" name="password" type="password" value="">
 							</div>
 							<div class="form-group col-lg-6">
-								<label>New Password</label> <input class="form-control" placeholder="Password" name="preferences.newPassword" type="password" value=""></div>
+								<label>New Password</label> <input class="form-control" placeholder="Password" name="newPassword" type="password" value=""></div>
 							<div class="form-group col-lg-6">
-								<label>Confirm New Password</label> 
-								<input class="form-control" placeholder="Password" name="preferences.newPassword2" type="password" value="">
+								<label>Confirm New Password</label>
+								<input class="form-control" placeholder="Password" name="newPassword2" type="password" value="">
 							</div>
 						</div>
 						<div class="panel-footer text-right">
@@ -58,4 +75,12 @@
 	$("#btn-change").on("click", function(e) {
 		$("#form-change").submit();
 	});
+	
+	$(document).ready(function() {
+		$("#fielderrors li").each(function (index, value) { 
+			var tt = $(this).text();
+			$("[name="+ tt +"]").parent().addClass("has-error");
+		});
+	});
+	
 </script>

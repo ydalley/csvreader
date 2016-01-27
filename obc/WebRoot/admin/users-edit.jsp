@@ -20,6 +20,22 @@
 						<a href="#" class="alert-link">Alert Link</a>.
 					</div>
 				</s:if>
+				<s:if test="hasFieldErrors()">
+						<div hidden="hidden">
+							<ul id="fielderrors">
+								<s:iterator value="fieldErrors.keySet()" var="field">
+								<li>${field}</li>
+								</s:iterator>
+							</ul>
+						</div>
+						</s:if>
+				<s:if test="hasFieldErrors()">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<s:fielderror />
+						
+					</div>
+				</s:if>
 				<s:form role="form" action="update" method="post" id="form-save-code">
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit User</div>
@@ -70,5 +86,11 @@
 <script type="text/javascript">
 	$("#btn-save-user").on("click", function(e) {
 		$("#form-save-user").submit();
+	});
+	$(document).ready(function() {
+		$("#fielderrors li").each(function (index, value) { 
+			var tt = $(this).text();
+			$("[name='"+ tt +"']").parent().addClass("has-error");
+		});
 	});
 </script>

@@ -1,12 +1,14 @@
 package com.ebsl.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.catalina.realm.RealmBase;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +23,7 @@ import com.ebsl.data.dao.UserDao;
 import com.ebsl.data.model.User;
 import com.ebsl.service.OBCException;
 import com.ebsl.service.UserService;
+import com.ebsl.utils.BeanUtilsBean;
 import com.ebsl.utils.PageBean;
 
 @Service
@@ -85,20 +88,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String modify(User user, User editor) throws OBCException {
-		userDao.update(user);
+		User user2 = userDao.findById(user.getId());
+		try {
+			BeanUtilsBean.getInstance().copyProperties(user2, user);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		userDao.update(user2);
 		return "";
 	}
 
-	@Override
-	public User getCurrentUser() {
-		final Long currentUserId = (Long) SecurityUtils.getSubject()
-				.getPrincipal();
-		if (currentUserId != null) {
-			return getUser(currentUserId);
-		} else {
-			return null;
-		}
-	}
 
 	@Override
 	@Transactional
@@ -161,6 +164,7 @@ public class UserServiceImpl implements UserService {
 			String newPassword) throws OBCException {
 		if (validatePassword(user, oldPassword, newPassword)) {
 			String passwd = generateSHAdigest(newPassword);
+			user = userDao.findById(user.getId());
 			user.setPassword(passwd);
 			user.setExpiryDate(passwordExpiryDate());
 			userDao.update(user);

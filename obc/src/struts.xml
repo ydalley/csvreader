@@ -33,25 +33,57 @@
 
 			<interceptor name="SecurityInterceptor"
 				class="com.ebsl.interceptors.SecurityInterceptor" />
+				
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse,index</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+
 
 			<interceptor-stack name="obcDefaultStack">
 				<interceptor-ref name="SecurityInterceptor" />
 				<interceptor-ref name="currentUserInterceptor" />
 				<interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="logger"/>
 			</interceptor-stack>
 		</interceptors>
-
-		<default-interceptor-ref name="obcDefaultStack" />
+<default-interceptor-ref name="obcDefaultStack"/>
 
 		<global-results>
-			<result name="login" type="redirect">/Login.action</result>
+			<result name="login" type="redirect">/login.jsp</result>
 			<result name="SecurityException">/admin/index.jsp</result>
+			<result name="LoginException">/login.jsp</result>
 		</global-results>
 
 		<global-exception-mappings>
 			<exception-mapping exception="org.apache.shiro.authz.UnauthorizedException"
 				result="SecurityException" />
+			<exception-mapping exception="org.apache.shiro.authz.UnauthenticatedException"
+				result="LoginException" />
+
 		</global-exception-mappings>
-		
+
 	</package>
 </struts>

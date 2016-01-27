@@ -32,8 +32,8 @@ public class ObcInlineRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-		String userName = arg0.getPrimaryPrincipal() + "";
-		User user = userservice.getUserForLoginByName(userName);
+		User user = (User)arg0.getPrimaryPrincipal() ;
+//		User user = userservice.getUserForLoginByName(userName);
 		Profile profile = securityservice.loadProfile(user.getProfile().getId());
 		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -51,7 +51,7 @@ public class ObcInlineRealm extends AuthorizingRealm {
 		SimpleAuthenticationInfo info = null;
 
 		User user = userservice.getUserForLoginByName(at.getUsername());
-		info = new SimpleAuthenticationInfo(user.getLoginId(),
+		info = new SimpleAuthenticationInfo(user,
 				user.getPassword(), ByteSource.Util.bytes(user.getLoginId()
 						.toUpperCase()), getName());
 		return info;
@@ -71,5 +71,6 @@ public class ObcInlineRealm extends AuthorizingRealm {
 		return super.isPermitted(arg0, arg1);
 	}
 
+	
 	
 }

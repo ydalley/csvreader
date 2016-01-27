@@ -26,6 +26,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
@@ -70,6 +71,9 @@ public class SecurityInterceptor implements Interceptor
                 ((ActionSupport) action).addActionError (error);
             }
 			return Action.ERROR;
+		}catch (UnauthenticatedException e){
+			e.printStackTrace();
+			return Action.LOGIN;
 		}
 		return actionInvocation.invoke();
     }

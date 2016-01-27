@@ -13,6 +13,20 @@
 					</div>
 
 				</s:if>
+				<s:if test="hasFieldErrors()">
+						<div hidden="hidden">
+							<ul id="fielderrors">
+								<s:iterator value="fieldErrors.keySet()" var="field">
+								<li>${field}</li>
+								</s:iterator>
+							</ul>
+						</div>
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<s:fielderror />
+						
+					</div>
+				</s:if>
 				<s:if test="hasActionMessages()">
 					<div class="alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -41,6 +55,7 @@
 							</div>
 							<div class="form-group col-lg-6">
 								<label>Profile</label> <select class="form-control" name="user.profile.id">
+										<option disabled selected> -- select a profile -- </option>
 									<s:iterator value="profiles" var="p">
 										<option value="${p.id}" ${p.id == user.profile.id ? 'selected' : ''}>${p.name}</option>
 									</s:iterator>
@@ -68,5 +83,11 @@
 <script type="text/javascript">
 	$("#btn-create-user").on("click", function(e) {
 		$("#form-create-user").submit();
+	});
+	$(document).ready(function() {
+		$("#fielderrors li").each(function (index, value) { 
+			var tt = $(this).text();
+				$("[name='"+ tt +"']").parent().addClass("has-error");
+		});
 	});
 </script>

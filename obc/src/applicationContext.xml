@@ -20,15 +20,8 @@
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
 
 
-    <!-- Enable annotation-based controllers using @Controller annotations -->
-    <bean id="annotationUrlMapping"
-          class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="interceptors" ref="currentUserInterceptor"/>
-    </bean>
-
-    <bean id="annotationMethodHandlerAdapter"
-          class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
-          
+  
+    
     
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />

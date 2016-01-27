@@ -8,7 +8,9 @@
     </Appenders>
     <Loggers>
 <!--         <Logger name="com.opensymphony.xwork2" level="info"/> -->
-        <Logger name="org.apache.struts2.convention" level="info"/>
+        <Logger name="org.apache.struts2" level="debug"/>
+         <Logger name="com.opensymphony.xwork2" level="debug"/>
+        
         <Logger name="com.ebsl" level="debug"/>
        <Logger name="org.hibernate" level="info"/>
        <!-- 
