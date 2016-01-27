@@ -136,15 +136,7 @@ public class UsersAction extends ActionSupport implements Preparable,
 	@Action(value = "/admin/users/create",results = {@Result(name="input",location="/admin/users-editNew.jsp"),
 			@Result(name="success",location="/admin/users-index.jsp")})
 	@RequiresPermissions(value="create:user")
-	@Validations(
-            requiredStrings ={
-            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", message = "You must enter a value for First Name."),
-            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName", message = "You must enter a value for Last Name."),
-            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.loginId", message = "You must enter a value for Login ID.")},
-            emails =
-                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a value for email.")}
-           
-    )
+	         
 	public String create() {
 		log.debug("Create new user {}", user);
 		try {
@@ -160,15 +152,7 @@ public class UsersAction extends ActionSupport implements Preparable,
 
 	}
 
-	@Validations(
-            requiredStrings ={
-            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", message = "You must enter a value for First Name."),
-            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName", message = "You must enter a value for Last Name."),
-            		@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.loginId", message = "You must enter a value for Login ID.")},
-            emails =
-                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a value for email.")}
-           
-    )
+
 	@Action(value = "/admin/users/update",results = {@Result(name="input",location="/admin/users-edit.jsp"),
 			@Result(name="success",location="/admin/users-index.jsp")})
 	@RequiresPermissions(value="update:user")

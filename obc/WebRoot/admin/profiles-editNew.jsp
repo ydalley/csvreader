@@ -13,6 +13,20 @@
 						<a href="#" class="alert-link">Alert Link</a>.
 					</div>
 				</s:if>
+				<s:if test="hasFieldErrors()">
+						<div hidden="hidden">
+							<ul id="fielderrors">
+								<s:iterator value="fieldErrors.keySet()" var="field">
+								<li>${field}</li>
+								</s:iterator>
+							</ul>
+						</div>
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<s:fielderror />
+						
+					</div>
+				</s:if>
 				<s:if test="hasActionMessages()">
 					<div class="alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -33,7 +47,7 @@
 								<label>Email</label> <input class="form-control" name="profile.email" value="${profile.email}">
 							</div>
 							<div class="form-group col-lg-6">
-								<label>Role</label> <input class="form-control" name="code.description" value="${profile.role}">
+								<label>Role</label> <input class="form-control" name="profile.role" value="${profile.role}">
 							</div>
 							</fieldset>
 							<fieldset>
@@ -98,5 +112,11 @@
 	$("#btn-create").on("click", function(e) {
 		$('.right-selector option').prop("selected", true);
 		$("#form-save").submit();
+	});
+	$(document).ready(function() {
+		$("#fielderrors li").each(function (index, value) { 
+			var tt = $(this).text();
+				$("[name='"+ tt +"']").parent().addClass("has-error");
+		});
 	});
 </script>

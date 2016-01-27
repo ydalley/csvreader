@@ -29,8 +29,8 @@
 					<div class="panel-group" id="accordion">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-							<s:url action="show" includeContext="true"  var="showurl"/>
-							<s:url action="new" includeContext="true" var="newurl"/>
+							<s:url action="show"   var="showurl"/>
+							<s:url action="new"  var="newurl"/>
 								<div class="btn-toolbar" role="toolbar" aria-label="code toolbar">
 									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn  btn-primary"
 										id='btn-show' disabled>
@@ -61,7 +61,7 @@
 								</div>
 								<!-- /.table-responsive -->
 								<!-- Modal -->
-								<s:url action="edit" includeContext="true" var="editurl"/>
+								<s:url action="edit"  var="editurl"/>
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 									aria-hidden="true">
 									<div class="modal-dialog">

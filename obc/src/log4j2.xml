@@ -8,11 +8,11 @@
     </Appenders>
     <Loggers>
 <!--         <Logger name="com.opensymphony.xwork2" level="info"/> -->
-        <Logger name="org.apache.struts2" level="debug"/>
-         <Logger name="com.opensymphony.xwork2" level="debug"/>
+        <!-- <Logger name="org.apache.struts2" level="debug"/> -->
+       <!--   <Logger name="com.opensymphony.xwork2" level="debug"/> -->
         
         <Logger name="com.ebsl" level="debug"/>
-       <Logger name="org.hibernate" level="info"/>
+       <Logger name="org.hibernate" level="debug"/>
        <!-- 
         <Logger name="org.hibernate.search" level="debug"/>
           <Logger name="org.apache.lucene" level="debug"/> -->

@@ -9,6 +9,32 @@ import org.apache.struts2.json.annotations.JSON;
 @Entity
 public class Profile {
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Profile other = (Profile) obj;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected long id;
@@ -20,9 +46,9 @@ public class Profile {
     protected int version;
 	@ManyToMany
 	@JoinTable(
-		      name="PROFILE_OPTIONS",
-		      joinColumns={@JoinColumn(name="PROFILE_ID", referencedColumnName="ID")},
-		      inverseJoinColumns={@JoinColumn(name="OPTION_ID", referencedColumnName="ID")})
+		      name="profile_options",
+		      joinColumns={@JoinColumn(name="profile_id", referencedColumnName="id")},
+		      inverseJoinColumns={@JoinColumn(name="option_id", referencedColumnName="id")})
 	private List<Option> options;
 	
 	@JSON(name="DT_RowId")

@@ -28,10 +28,10 @@
 					<div class="panel-group" id="accordion">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-							<s:url action="show" includeContext="true"  var="showurl"/>
-							<s:url action="new" includeContext="true" var="newurl"/>
-							<s:url action="enable" includeContext="true" var="enableurl"/>
-							<s:url action="password" includeContext="true" var="passurl"/>
+							<s:url action="show" var="showurl"/>
+							<s:url action="new"  var="newurl"/>
+							<s:url action="enable" var="enableurl"/>
+							<s:url action="password"  var="passurl"/>
 								<div class="btn-toolbar" role="toolbar" aria-label="user toolbar">
 									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn  btn-primary onselect"
 										id='btn-show-user' disabled>
@@ -69,7 +69,7 @@
 								</div>
 								<!-- /.table-responsive -->
 								<!-- Modal -->
-								<s:url action="edit" includeContext="true" var="editurl"/>
+								<s:url action="edit"  var="editurl"/>
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 									aria-hidden="true">
 									<div class="modal-dialog">

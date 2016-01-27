@@ -21,6 +21,8 @@ import com.ebsl.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 @Controller
 @Scope("prototype")
@@ -34,10 +36,6 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 
 	private User user;
 	private Long id;
-	private String password;
-	private String newPassword;
-	private String newPassword2;
-	private String jsonString;
 
 	@Autowired
 	private UserService userservice;
@@ -57,7 +55,7 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 			@Result(name = "success", location = "/admin/users-index.jsp") })
 	public String password() {
 		try {
-			userservice.setUserPassword(user, password, newPassword);
+			userservice.setUserPassword(user, model.password, model.newPassword);
 			addActionMessage("User password reset successfully");
 		} catch (OBCException e) {
 			// TODO Auto-generated catch block
@@ -76,37 +74,14 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 		return user;
 	}
 
-
-	public String getPassword() {
-		return password;
+	private Model model;
+	
+	public Model getModel() {
+		return model;
 	}
 
-	@RequiredStringValidator(message = "Password is required", shortCircuit = false)
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	@RequiredStringValidator(message = "New Password is required", shortCircuit = false)
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-	public String getNewPassword2() {
-		return newPassword2;
-	}
-
-	public String getJsonString() {
-		return jsonString;
-	}
-
-	@RequiredStringValidator(message = "Confirm New Password is required", shortCircuit = false)
-	@ExpressionValidator(message = "Confirm that your passwords match", expression = "newPassword == newPassword2")
-	public void setNewPassword2(String newPassword2) {
-		this.newPassword2 = newPassword2;
+	public void setModel(Model model) {
+		this.model = model;
 	}
 
 	@Override
@@ -114,4 +89,28 @@ public class PreferencesAction extends ActionSupport implements UserAware {
 		setUser(user);
 	}
 
+	public class Model{
+		private String password;
+		private String newPassword;
+		private String newPassword2;
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		public String getNewPassword() {
+			return newPassword;
+		}
+		public void setNewPassword(String newPassword) {
+			this.newPassword = newPassword;
+		}
+		public String getNewPassword2() {
+			return newPassword2;
+		}
+		public void setNewPassword2(String newPassword2) {
+			this.newPassword2 = newPassword2;
+		}
+		
+	}
 }

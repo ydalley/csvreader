@@ -145,6 +145,12 @@ public class ProfilesAction extends ActionSupport implements Preparable,
 	public void prepare() throws Exception {
 		// code = new Code();
 		String[] strings = params.get("id");
+		String[] altstrings = params.get("profile.id");
+		//fix for input 
+		if(strings == null || strings.length == 0){
+			strings = altstrings;
+			loadOptions = true;
+		}
 		if (strings != null && strings.length > 0) {
 			id = NumberUtils.createLong(strings[0]);
 			if(loadOptions){

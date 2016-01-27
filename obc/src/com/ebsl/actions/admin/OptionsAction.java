@@ -50,7 +50,6 @@ public class OptionsAction extends ActionSupport implements Preparable,
 	private CodeService codeservice;
 	private Map<String, String[]> params;
 
-	// GET /codes/edit?1d=1
 	@Action(value = "/admin/options/show", results = { @Result(name = "show", location = "/admin/options-show.jsp") })
 	public String show() {
 		return "show";
@@ -87,14 +86,12 @@ public class OptionsAction extends ActionSupport implements Preparable,
 		return "index";
 	}
 
-	// GET /codes/edit?1d=1
 	@RequiresPermissions(value="update:option")
 	@Action(value = "/admin/options/edit", results = { @Result(name = "edit", location = "/admin/options-edit.jsp") })
 	public String edit() {
 		return "edit";
 	}
 
-	// GET /codes/new
 	@RequiresPermissions(value="create:option")
 	@Action(value = "/admin/options/new", results = { @Result(name = "input", location = "/admin/options-editNew.jsp") })
 	public String editNew() {

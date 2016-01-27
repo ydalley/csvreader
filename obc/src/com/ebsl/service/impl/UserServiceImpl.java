@@ -151,11 +151,13 @@ public class UserServiceImpl implements UserService {
 	public static void main(String[] args) throws OBCException {
 		UserServiceImpl u = new UserServiceImpl();
 		String encrypt = u.encrypt("yemi", "YDALLEY");
-		String encrypt2 = u.apacheEncrypt("yemi", "YDALLEY");
+		//String encrypt2 = u.apacheEncrypt("yemi", "YDALLEY");
 		String encrypt3 = u.generateSHAdigest("yemi");
 		System.out.println(encrypt);
-		System.out.println(encrypt2);
+		//System.out.println(encrypt2);
 		System.out.println(encrypt3);
+		
+		//5e77a9dc45f2cf7b9807ff2b927e0041c9b4644ed6f31169d6602b0c6a8606f0
 
 	}
 

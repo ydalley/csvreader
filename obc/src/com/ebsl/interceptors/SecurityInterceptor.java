@@ -19,6 +19,7 @@ package com.ebsl.interceptors;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import com.ebsl.data.model.User;
 import com.ebsl.service.SecurityService;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -67,7 +68,8 @@ public class SecurityInterceptor implements Interceptor
 			Object action = actionInvocation.getAction ();
             if (action instanceof ActionSupport) {
             	List optionDesc = securityservice.getOptionDesc(permission);
-            	String error = String.format("%s does not have permission to [%s]", shiroUser.getPrincipal(),optionDesc);
+            	User user = (User)shiroUser.getPrincipal();
+            	String error = String.format("%s does not have permission to [%s]", user.getFirstName() +" "+user.getLastName(),optionDesc);
                 ((ActionSupport) action).addActionError (error);
             }
 			return Action.ERROR;

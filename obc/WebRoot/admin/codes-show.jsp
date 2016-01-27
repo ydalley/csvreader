@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<s:url action="edit" includeContext="true"  var="editurl"/>
+<s:url action="edit"  var="editurl"/>
 <s:form role="form" action="%{editurl}" id="form-edit">
 	<div class="panel-body">
 	<fieldset disabled="disabled">

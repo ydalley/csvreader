@@ -5,13 +5,11 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Codes</h1>
+				<h1 class="page-header">Preferences</h1>
 				<s:if test="hasActionErrors()">
 					<div class="alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<s:actionerror />
-						<s:fielderror />
-						
 					</div>
 						
 				</s:if>
@@ -23,8 +21,6 @@
 								</s:iterator>
 							</ul>
 						</div>
-						</s:if>
-				<s:if test="hasFieldErrors()">
 					<div class="alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<s:fielderror />
@@ -45,13 +41,13 @@
 
 
 							<div class="form-group col-lg-6">
-								<label>Old Password</label> <input class="form-control" placeholder="Password" name="password" type="password" value="">
+								<label>Old Password</label> <input class="form-control" placeholder="Password" name="model.password" type="password" value="${model.password}">
 							</div>
 							<div class="form-group col-lg-6">
-								<label>New Password</label> <input class="form-control" placeholder="Password" name="newPassword" type="password" value=""></div>
+								<label>New Password</label> <input class="form-control" placeholder="Password" name="model.newPassword" type="password" value="${model.newPassword}"></div>
 							<div class="form-group col-lg-6">
 								<label>Confirm New Password</label>
-								<input class="form-control" placeholder="Password" name="newPassword2" type="password" value="">
+								<input class="form-control" placeholder="Password" name="model.newPassword2" type="password" value="${model.newPassword2}">
 							</div>
 						</div>
 						<div class="panel-footer text-right">
@@ -79,7 +75,7 @@
 	$(document).ready(function() {
 		$("#fielderrors li").each(function (index, value) { 
 			var tt = $(this).text();
-			$("[name="+ tt +"]").parent().addClass("has-error");
+			$("[name='"+ tt +"']").parent().addClass("has-error");
 		});
 	});
 	

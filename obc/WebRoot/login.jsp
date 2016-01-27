@@ -1,4 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 <head>
@@ -39,11 +40,18 @@
 %>
 	<div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                               Login attempt was unsuccessful.
+                               Login attempt was un-successful.
            </div>
 <%
   }
 %>
+<s:if test="%{#request.shiroLoginFailure != null}" >
+			<div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                               Login attempt was unsuccessful:${request.shiroLoginFailure}
+           </div>
+</s:if>
+
     <div class="container">
 
         <div class="row">
