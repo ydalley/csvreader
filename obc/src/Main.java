@@ -15,6 +15,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ebsl.data.model.Code;
+import com.ebsl.data.model.Option;
 import com.ebsl.data.model.PaymentRequest;
 import com.ebsl.data.model.User;
 
@@ -108,6 +109,11 @@ public class Main {
 				.idFetchSize(20).threadsForSubsequentFetching(3)
 				.progressMonitor(monitor).startAndWait();
 		textSession.createIndexer(PaymentRequest.class).batchSizeToLoadObjects(5)
+		.cacheMode(CacheMode.NORMAL).threadsToLoadObjects(5)
+		.idFetchSize(50).threadsForSubsequentFetching(3)
+		.progressMonitor(monitor).startAndWait();
+		
+		textSession.createIndexer(Option.class).batchSizeToLoadObjects(5)
 		.cacheMode(CacheMode.NORMAL).threadsToLoadObjects(5)
 		.idFetchSize(50).threadsForSubsequentFetching(3)
 		.progressMonitor(monitor).startAndWait();

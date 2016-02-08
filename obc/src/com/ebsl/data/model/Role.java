@@ -5,12 +5,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
 
 import static javax.persistence.GenerationType.AUTO;
 
 import javax.persistence.ManyToOne;
 
 @Entity
+@Table(name="role")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = AUTO)

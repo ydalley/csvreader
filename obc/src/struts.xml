@@ -33,19 +33,19 @@
 
 			<interceptor name="SecurityInterceptor"
 				class="com.ebsl.interceptors.SecurityInterceptor" />
-				
-			
+
+
 
 
 			<interceptor-stack name="obcDefaultStack">
-			<interceptor-ref name="logger"/>
+				<interceptor-ref name="logger" />
 				<interceptor-ref name="SecurityInterceptor" />
 				<interceptor-ref name="currentUserInterceptor" />
 				<interceptor-ref name="defaultStack" />
-				 <interceptor-ref name="logger"/>
+				<interceptor-ref name="logger" />
 			</interceptor-stack>
 		</interceptors>
-<default-interceptor-ref name="obcDefaultStack"/>
+		<default-interceptor-ref name="obcDefaultStack" />
 
 		<global-results>
 			<result name="login" type="redirect">/login.jsp</result>
@@ -60,6 +60,7 @@
 				result="LoginException" />
 
 		</global-exception-mappings>
-
+		
+		
 	</package>
 </struts>

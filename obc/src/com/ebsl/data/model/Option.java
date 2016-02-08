@@ -8,8 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
 import org.apache.struts2.json.annotations.JSON;
-
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+@Indexed
 @Entity
+@Table(name="option")
 public class Option {
 	
 	@Override
@@ -43,7 +48,9 @@ public class Option {
 	@Id 
 	@GeneratedValue
 	protected long id;
+	@Field(index=Index.YES, store=Store.NO)
 	private String name;
+	@Field(index=Index.YES, store=Store.NO)
 	private String description;
 	@ManyToMany(mappedBy="options")
 	private Set<Profile>  profiles;

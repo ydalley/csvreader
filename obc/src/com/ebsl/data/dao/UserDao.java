@@ -21,18 +21,18 @@ import com.ebsl.utils.PageBean;
 @Repository("JpaDao")
 public class UserDao extends JpaDao<User>{
 
-	public List<User> findByProperty(String propertyName, String value) {
-		String queryString = "from User as model where model." + propertyName + "= ?";
-		List<User> list = null;
-		try {
-			Query queryObject = sessionFactory.getCurrentSession().createQuery(queryString);
-			queryObject.setParameter(0, value);
-			list = queryObject.list();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
+//	public List<User> findByProperty(String propertyName, String value) {
+//		String queryString = "from User as model where model." + propertyName + "= ?";
+//		List<User> list = null;
+//		try {
+//			Query queryObject = sessionFactory.getCurrentSession().createQuery(queryString);
+//			queryObject.setParameter(0, value);
+//			list = queryObject.list();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
 	
 	public User getActiveUserByName(String name) {
 		String queryString = "from User as model where model.loginId = ? and model.status='E' ";

@@ -16,7 +16,7 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Indexed
 @Table(
-	    name="Code", 
+	    name="code", 
 	    uniqueConstraints=
 	        @UniqueConstraint(columnNames={"code", "type"})
 	)

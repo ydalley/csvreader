@@ -1,14 +1,16 @@
 {
   "plugins": {
-    "guess-types": {
+    "outline": {
       
     },
-    "outline": {
+    "bootstrap": {
       
     }
   },
   "libs": [
     "ecma5",
-    "browser"
-  ]
+    "browser",
+    "jquery"
+  ],
+  "ecmaVersion": 5
 }

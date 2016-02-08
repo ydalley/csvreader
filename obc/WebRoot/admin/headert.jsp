@@ -92,7 +92,7 @@
 						<li><a href="reports.jsp"><i class="fa fa-bar-chart-o"></i> Reports</a></li>
 						<li><a href="#"><i class="fa fa-wrench"></i> Control Panel<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a href="${pageContext.request.contextPath}/admin/system/index">System Settings</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/configurations/index">System Settings</a></li>
 							</ul>
 							<ul class="nav nav-second-level">
 								<li><a href="${pageContext.request.contextPath}/admin/codes/index">System Codes</a></li>

@@ -2,6 +2,7 @@ package com.ebsl.actions.admin;
 
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,8 +80,16 @@ public class OptionsAction extends ActionSupport implements Preparable,
 				.getParameter("length"));
 		start = NumberUtils.createInteger(ServletActionContext.getRequest()
 				.getParameter("start"));
+		String search = ServletActionContext.getRequest()
+				.getParameter("search[value]");
 
-		pagebean = securityservice.getAllOptions(length, start);
+		if (StringUtils.isEmpty(search)) {
+			pagebean = securityservice.getAllOptions(length, start);
+		} else {
+			pagebean = securityservice.findOption(search, length, start);
+		}
+		
+		
 		pagebean.setDraw(draw);
 
 		return "index";
@@ -122,7 +131,7 @@ public class OptionsAction extends ActionSupport implements Preparable,
 	// POST /codes/update
 	@RequiresPermissions(value="update:option")
 	@Action(value = "/admin/options/update", results = {
-			@Result(name = "error", location = "/admin/options-edit.jsp"),
+			@Result(name = "input", location = "/admin/options-edit.jsp"),
 			@Result(name = "success", location = "/admin/options-index.jsp") })
 	public String update() {
 		try {

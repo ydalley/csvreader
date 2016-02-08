@@ -21,4 +21,6 @@ public interface SecurityService {
 	Profile loadProfile(Long id);
 	List<Option> getAllOtherOptions(Profile profile);
 	List getOptionDesc(String[] options);
+	
+	PageBean findOption(String pattern,int max, int record);
 }

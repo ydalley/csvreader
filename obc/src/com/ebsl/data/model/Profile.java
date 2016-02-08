@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.apache.struts2.json.annotations.JSON;
 
 @Entity
+@Table(name="profile")
 public class Profile {
 
 	@Override

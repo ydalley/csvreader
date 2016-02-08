@@ -96,4 +96,9 @@ public class SecurityServiceImpl implements SecurityService {
 		// TODO Auto-generated method stub
 		return optionDao.getOptionDesc(options);
 	}
+
+	@Override
+	public PageBean findOption(String pattern, int max, int record) {
+		return optionDao.findByFullText(pattern, max, record);
+	}
 }
