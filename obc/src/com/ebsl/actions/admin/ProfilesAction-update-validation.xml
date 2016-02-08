@@ -1,0 +1,22 @@
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+
+
+	<field name="profile.name">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>Profile name is required</message>
+		</field-validator>
+
+	</field>
+
+	
+	 <field name="profile.email">
+		<field-validator type="email">
+			<message>Invalid email</message>
+		</field-validator>
+	</field>
+
+ 
+</validators>
