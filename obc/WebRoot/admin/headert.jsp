@@ -28,6 +28,8 @@
 <!-- Custom Fonts -->
 <link href="${pageContext.request.contextPath}/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
+	<link href="${pageContext.request.contextPath}/custom/css/obc.css" rel="stylesheet"
+	type="text/css">
 </head>
 <body>
 	<script src="${pageContext.request.contextPath}/bower_components/jquery/dist/jquery.min.js"></script>

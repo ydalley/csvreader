@@ -39,12 +39,33 @@ public class PaymentRequestDao extends JpaDao<PaymentRequest> {
 		return list;
 	}
 
-	public PageBean findByExample(PaymentRequest entity, int record, int max) {
-		Criteria criteria = sessionFactory
-				.getCurrentSession()
-				.createCriteria(PaymentRequest.class)
-				.add(Example.create(entity).ignoreCase()
-						.enableLike(MatchMode.ANYWHERE));
+	public PageBean findByExample(PaymentRequest entity, Double paymentUpper,
+			int record, int max) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
+				PaymentRequest.class);
+
+		if (entity.getPaymentAmount() == null) {
+			entity.setPaymentAmount(paymentUpper);
+		}
+
+		if (entity.getPaymentAmount() != null) {
+
+			Double low = Math.ceil(entity.getPaymentAmount());
+			Double high = null;
+			if (paymentUpper == null) {
+				high = Math.ceil(entity.getPaymentAmount() + 1);
+			} else {
+				high = Math.ceil(Math.max(low, paymentUpper) + 1);
+				low = Math.ceil(Math.min(low, paymentUpper));
+			}
+
+			criteria.add(Restrictions.ge("paymentAmount", low)).add(
+					Restrictions.lt("paymentAmount", high));
+			entity.setPaymentAmount(null);
+		}
+
+		criteria.add(Example.create(entity).ignoreCase()
+				.enableLike(MatchMode.ANYWHERE));
 
 		ScrollableResults results = criteria.scroll();
 		results.last();
@@ -84,10 +105,9 @@ public class PaymentRequestDao extends JpaDao<PaymentRequest> {
 				high = Math.ceil(Math.max(low, paymentUpper) + 1);
 				low = Math.ceil(Math.min(low, paymentUpper));
 			}
-			
-			criteria
-			.add(Restrictions.ge("paymentAmount", low))
-			.add(Restrictions.lt("paymentAmount", high));
+
+			criteria.add(Restrictions.ge("paymentAmount", low)).add(
+					Restrictions.lt("paymentAmount", high));
 			entity.setPaymentAmount(null);
 		}
 

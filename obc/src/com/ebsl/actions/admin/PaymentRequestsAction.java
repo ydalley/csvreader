@@ -90,11 +90,11 @@ public class PaymentRequestsAction extends ActionSupport implements Preparable,
 		String search = ServletActionContext.getRequest()
 				.getParameter("search[value]");
 		
-		String s = ServletActionContext.getRequest().getParameter("paymemtAmount");
+		String s = ServletActionContext.getRequest().getParameter("paymentAmount");
 		if(NumberUtils.isNumber(s)){
 			paymentrequest.setPaymentAmount(NumberUtils.createDouble(s));
 		}
-		 s = ServletActionContext.getRequest().getParameter("paymemtAmountl");
+		 s = ServletActionContext.getRequest().getParameter("paymentAmountl");
 		if(NumberUtils.isNumber(s)){
 			paymentAmountl = NumberUtils.createDouble(s);
 		}

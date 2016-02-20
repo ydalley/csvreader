@@ -32,11 +32,11 @@
 							<s:url action="show"  var="showurl"/>
 							<s:url action="new"  var="newurl"/>
 								<div class="btn-toolbar" role="toolbar" aria-label="permission toolbar">
-									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn  btn-primary"
+									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-primary"
 										id='btn-show' disabled>
 										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Open
 									</button>
-									<button formaction="${newurl}" class="btn  btn-primary" id="btn-new">
+									<button formaction="${newurl}" class="btn btn-xs btn-primary" id="btn-new">
 										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> New
 									</button>
 								</div>

@@ -41,7 +41,7 @@ public class PaymentRequestServiceImpl implements PaymentRequestService {
 			 int record,int max) {
 		Date datel, dateh;
 		if (start == null && end == null) {
-			return paymentRequestDao.findByExample(entity, record,max);
+			return paymentRequestDao.findByExample(entity,paymentUpper ,record,max);
 		} else if (start == null) {
 			datel = DateUtils.ceiling(end, Calendar.HOUR);
 			dateh = DateUtils.ceiling(DateUtils.addDays(end, 1), Calendar.HOUR);

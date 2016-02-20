@@ -36,7 +36,7 @@
 										id='btn-show' disabled>
 										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Open
 									</button>
-									<button formaction="${newurl}" class="btn  btn-primary" id="btn-new">
+									<button formaction="${newurl}" class="btn  btn-primary btn-xs" id="btn-new">
 										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> New
 									</button>
 								</div>
