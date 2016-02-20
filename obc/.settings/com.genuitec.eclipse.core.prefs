@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/dist,WebRoot/bower_components,WebRoot/js,WebRoot/less
+validator.Unchecked=

@@ -15,24 +15,27 @@
 
 
 	<context:component-scan base-package="com.ebsl" />
-<bean id="propertyPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-  <property name="locations">
-    <list>
-      <value>classpath:system.properties</value>
-    </list>
-  </property>
-</bean>
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:system.properties</value>
+			</list>
+		</property>
+	</bean>
 
-  <!-- Required for security annotations to work in this servlet -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+	<!-- Required for security annotations to work in this servlet -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 
 
-  
-    
-    
+
+
+
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="${db.driver}" />
-<!-- 		<property name="url" value="jdbc:mariadb://${db.host}:${db.port}/${db.schmema}" /> -->
+		<!-- <property name="url" value="jdbc:mariadb://${db.host}:${db.port}/${db.schmema}" 
+			/> -->
 		<property name="url" value="${db.url}" />
 		<property name="username" value="${db.user}" />
 		<property name="password" value="${db.password}" />
@@ -53,7 +56,7 @@
 				<prop key="hibernate.c3p0.max_statement">50</prop>
 				<prop key="hibernate.c3p0.testConnectionOnCheckout">false</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-<!-- 				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop> -->
+				<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop> -->
 				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
 				<prop key="hibernate.search.default.indexBase">/var/lucene/indexes</prop>
 				<prop key="hibernate.search.lucene_version">LUCENE_CURRENT</prop>
@@ -78,6 +81,14 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+	
+
+	<bean id="ehcache"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml" />
+		<property name="shared" value="true" />
+	</bean>
+	
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="myRealm" />
@@ -90,12 +101,13 @@
 			<bean id="matcher" class="com.ebsl.security.ObcCredentailsMatcher" />
 		</property>
 	</bean>
-	
-<!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/> -->
 
-<!-- <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"> -->
-<!--     <property name="securityManager" ref="securityManager"/> -->
-<!-- </bean> -->
+	<!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
+		depends-on="lifecycleBeanPostProcessor"/> -->
+
+	<!-- <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"> -->
+	<!-- <property name="securityManager" ref="securityManager"/> -->
+	<!-- </bean> -->
 
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />

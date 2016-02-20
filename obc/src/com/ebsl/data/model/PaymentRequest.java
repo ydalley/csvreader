@@ -1,6 +1,7 @@
 package com.ebsl.data.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,26 +73,26 @@ public class PaymentRequest implements Serializable {
 	// @Column(name="payment_description", length=100)
 	// private String paymentDescription;
 
-	@Column(name = "payment_date", length = 25)
-	private String paymentDate;
+	@Column(name = "payment_date")
+	private Date paymentDate;
 
 	@Column(name = "payment_amount")
-	private double paymentAmount;
+	private Double paymentAmount;
 
 	@Column(name = "amount_due_merchant")
-	private double amountDueMerchant;
+	private Double amountDueMerchant;
 
 	@Column(name = "receiving_bank_income_amount")
-	private double receivingBankIncomeAmount;
+	private Double receivingBankIncomeAmount;
 
 	@Column(name = "empire_income_amount")
-	private double empireIncomeAmount;
+	private Double empireIncomeAmount;
 
 	@Column(name = "invoice_number", length = 25)
 	private String invoiceNo;
 
-	@Column(name = "invoice_date", length = 25)
-	private String invoiceDate;
+	@Column(name = "invoice_date")
+	private Date invoiceDate;
 
 	@Column(name = "invoice_item_reference", length = 25)
 	private String invoiceItemReference;
@@ -219,43 +220,52 @@ public class PaymentRequest implements Serializable {
 	 * this.paymentDescription = paymentDescription; }
 	 */
 
-	public String getPaymentDate() {
-		return paymentDate;
-	}
 
-	public void setPaymentDate(String paymentDate) {
-		this.paymentDate = paymentDate;
-	}
-
-	public double getPaymentAmount() {
+	public Double getPaymentAmount() {
 		return paymentAmount;
 	}
 
-	public void setPaymentAmount(double paymentAmount) {
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	public Date getInvoiceDate() {
+		return invoiceDate;
+	}
+
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
+	public void setPaymentAmount(Double paymentAmount) {
 		this.paymentAmount = paymentAmount;
 	}
 
-	public double getAmountDueMerchant() {
+	public Double getAmountDueMerchant() {
 		return amountDueMerchant;
 	}
 
-	public void setAmountDueMerchant(double amountDueMerchant) {
+	public void setAmountDueMerchant(Double amountDueMerchant) {
 		this.amountDueMerchant = amountDueMerchant;
 	}
 
-	public double getReceivingBankIncomeAmount() {
+	public Double getReceivingBankIncomeAmount() {
 		return receivingBankIncomeAmount;
 	}
 
-	public void setReceivingBankIncomeAmount(double receivingBankIncomeAmount) {
+	public void setReceivingBankIncomeAmount(Double receivingBankIncomeAmount) {
 		this.receivingBankIncomeAmount = receivingBankIncomeAmount;
 	}
 
-	public double getEmpireIncomeAmount() {
+	public Double getEmpireIncomeAmount() {
 		return empireIncomeAmount;
 	}
 
-	public void setEmpireIncomeAmount(double empireIncomeAmount) {
+	public void setEmpireIncomeAmount(Double empireIncomeAmount) {
 		this.empireIncomeAmount = empireIncomeAmount;
 	}
 
@@ -267,13 +277,6 @@ public class PaymentRequest implements Serializable {
 		this.invoiceNo = invoiceNo;
 	}
 
-	public String getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(String invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
 
 	public String getInvoiceItemReference() {
 		return invoiceItemReference;

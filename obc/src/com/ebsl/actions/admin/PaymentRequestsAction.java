@@ -1,10 +1,14 @@
 package com.ebsl.actions.admin;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -20,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.ebsl.data.model.Code;
 import com.ebsl.data.model.PaymentRequest;
 import com.ebsl.service.PaymentRequestService;
 import com.ebsl.utils.PageBean;
@@ -55,7 +60,14 @@ public class PaymentRequestsAction extends ActionSupport implements Preparable,
 
 		return "index";
 	}
-
+	
+	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private Date fromDate = null, toDate = null;
+	private String merchantId;
+	private Double paymentAmount;
+	private Double paymentAmountl;
+	private String invoiceNumber;
+	
 	@Actions({
 		@Action(value = "/admin/paymentsj", results = { @Result(name = "index", type = "json", params = {
 				"root", "pagebean" }) }, interceptorRefs = { @InterceptorRef(value = "json") }),
@@ -65,6 +77,9 @@ public class PaymentRequestsAction extends ActionSupport implements Preparable,
 		int draw = 1;
 		int start = 0;
 		int length = -1;
+		
+		
+		PaymentRequest paymentrequest = new PaymentRequest();
 
 		draw = NumberUtils.createInteger(ServletActionContext.getRequest()
 				.getParameter("draw"));
@@ -74,17 +89,48 @@ public class PaymentRequestsAction extends ActionSupport implements Preparable,
 				.getParameter("start"));
 		String search = ServletActionContext.getRequest()
 				.getParameter("search[value]");
-
+		
+		String s = ServletActionContext.getRequest().getParameter("paymemtAmount");
+		if(NumberUtils.isNumber(s)){
+			paymentrequest.setPaymentAmount(NumberUtils.createDouble(s));
+		}
+		 s = ServletActionContext.getRequest().getParameter("paymemtAmountl");
+		if(NumberUtils.isNumber(s)){
+			paymentAmountl = NumberUtils.createDouble(s);
+		}
+		s = ServletActionContext.getRequest().getParameter("invoiceNumber");
+		if(StringUtils.isNotEmpty(s)){
+			paymentrequest.setInvoiceNo(s);
+		}
+		
+		s = ServletActionContext.getRequest().getParameter("merchantId");
+		if(StringUtils.isNotEmpty(s)){
+			paymentrequest.setMerchantId(s);
+		}
+		
+		try {
+			fromDate = DateUtils.parseDate(ServletActionContext.getRequest()
+					.getParameter("fromDate"), "yyyy-MM-dd");
+		} catch (Exception e) {
+		}
+		try {
+			toDate = DateUtils.parseDate(ServletActionContext.getRequest()
+					.getParameter("toDate"), "yyyy-MM-dd");
+		} catch (Exception e) {
+		}
+		
 		if (StringUtils.isEmpty(search)) {
-			pagebean = paymentRequestService.getAllPaymentRequests(length, start);
+			pagebean =paymentRequestService.findByExample(paymentrequest, paymentAmountl,fromDate, toDate, start, length);
 		} else {
-			pagebean = paymentRequestService.findPaymentRequests(search, length, start);
+//			pagebean = paymentRequestService.findPaymentRequests(search, length, start);
+			pagebean =paymentRequestService.findByExample(paymentrequest,paymentAmountl, fromDate, toDate, start, length);
 		}
 		pagebean.setDraw(draw);
 
 		return "index";
 	}
 
+	
 
 
 	public PaymentRequest getPayment() {
@@ -101,11 +147,12 @@ public class PaymentRequestsAction extends ActionSupport implements Preparable,
 
 	@Override
 	public void prepare() throws Exception {
-		// code = new Code();
 		String[] strings = params.get("id");
 		if (strings != null && strings.length > 0) {
 			id = NumberUtils.createLong(strings[0]);
 			payment = paymentRequestService.getPaymentRequest(id);
+		}else{
+			payment = new PaymentRequest();
 		}
 	}
 
@@ -125,6 +172,54 @@ public class PaymentRequestsAction extends ActionSupport implements Preparable,
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	public String getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(String merchantId) {
+		this.merchantId = merchantId;
+	}
+
+	public Double getPaymentAmount() {
+		return paymentAmount;
+	}
+
+	public void setPaymentAmount(Double paymentAmount) {
+		this.paymentAmount = paymentAmount;
+	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public Double getPaymentAmountl() {
+		return paymentAmountl;
+	}
+
+	public void setPaymentAmountl(Double paymentAmountl) {
+		this.paymentAmountl = paymentAmountl;
 	}
 
 }

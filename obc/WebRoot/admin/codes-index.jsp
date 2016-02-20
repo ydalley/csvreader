@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<s:include value="./headert.jsp" />
+<s:include value="./headert2.jsp" />
 <!-- Page Content -->
 <div id="page-wrapper">
 	<div class="container-fluid">
@@ -46,20 +46,7 @@
 						<div class="panel panel-default">
 							<!-- /.panel-heading -->
 							<div class="panel-body">
-								<div class="dataTable_wrapper">
-									<table class="table responsive table-striped table-bordered table-hover" id="obctable">
-										<thead>
-											<tr>
-												<th>Code</th>
-												<th>Type</th>
-												<th>Description</th>
-											</tr>
-										</thead>
-
-
-									</table>
-								</div>
-								<!-- /.table-responsive -->
+								<div id="CodeTableContainer"></div>
 								<!-- Modal -->
 								<s:url action="edit"  var="editurl"/>
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -96,75 +83,34 @@
 		<!-- /#wrapper -->
 	</div>
 </div>
-	<script>
-		$(document).on('hidden.bs.modal', function(e) {
-			$(e.target).removeData('bs.modal');
-		});
-
-		$("#myModal").on(
-				"show.bs.modal",
-				function(e) {
-					var link = $(e.relatedTarget);
-					var dt = $('#obctable').DataTable();
-					var id = $(dt.row({
-						selected : true
-					}).node()).attr("id");
-					$(this).find(".modal-body").load(link.attr("formaction"),
-							'id=' + id);
-				});
-
-		$("#btn-edit").on("click", function(e) {
-			var link = $(e.target);
-			var dt = $('#obctable').DataTable();
-			var id = $(dt.row({
-				selected : true
-			}).node()).attr("id");
-			window.location.href = link.attr("formaction") + '?id=' + id;
-			//goto url
-		});
-		
-		$("#btn-new").on("click", function(e) {
-			var link = $(e.target);
-			window.location.href = link.attr("formaction") ;
-			//goto url
-		});
-
+	<script type="text/javascript">
+	
 		$(document).ready(function() {
-			var table = $('#obctable').DataTable({
-
-				select : {
-					style : 'single'
+			$('#CodeTableContainer').jtable({
+				title : 'Codes',
+				actions : {
+					listAction : '/GettingStarted/PersonList',
+					createAction : '/GettingStarted/CreatePerson',
+					updateAction : '/GettingStarted/UpdatePerson',
+					deleteAction : '/GettingStarted/DeletePerson'
 				},
-				"processing" : true,
-				"serverSide" : true,
-				"ajax" : "codesj",
-				"columns" : [ {
-					"data" : "code"
-				}, {
-					"data" : "type"
-				}, {
-					"data" : "description"
-				} ]
-			});
-
-			table.on('select', function() {
-				if (table.rows({
-					selected : true
-				}).indexes().length === 0) {
-					$('#btn-show').attr("disabled", true);
-				} else {
-					$('#btn-show').removeAttr("disabled");
-				}
-
-			});
-
-			table.on('deselect', function() {
-				if (table.rows({
-					selected : true
-				}).indexes().length === 0) {
-					$('#btn-show').attr("disabled", true);
-				} else {
-					$('#btn-show').removeAttr("disabled");
+				fields : {
+					id : {
+						key : true,
+						list : false
+					},
+					code : {
+						title : 'Code',
+						width : '30%'
+					},
+					type : {
+						title : 'Type',
+						width : '30%'
+					},
+					description : {
+						title : 'Description',
+						width : '40%'
+					}
 				}
 			});
 		});

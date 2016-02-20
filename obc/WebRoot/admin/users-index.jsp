@@ -33,17 +33,17 @@
 							<s:url action="enable" var="enableurl"/>
 							<s:url action="password"  var="passurl"/>
 								<div class="btn-toolbar" role="toolbar" aria-label="user toolbar">
-									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn  btn-primary onselect"
+									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn  btn-primary btn-xs onselect"
 										id='btn-show-user' disabled>
 										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Open
 									</button>
-									<button formaction="${enableurl}" class="btn  btn-primary onselect" id="btn-enable-user" disabled >
+									<button formaction="${enableurl}" class="btn  btn-primary  btn-xs onselect" id="btn-enable-user" disabled >
 										<span class="fa fa-unlock" aria-hidden="true"></span>/<span class="fa fa-lock" aria-hidden="true"></span> Enable/Disable
 									</button>
-									<button formaction="${passurl}" class="btn  btn-primary onselect"  id="btn-password-user" disabled>
+									<button formaction="${passurl}" class="btn  btn-primary  btn-xs onselect"  id="btn-password-user" disabled>
 										<span class="fa fa-key" aria-hidden="true"></span> Password
 									</button>
-									<button formaction="${newurl}" class="btn  btn-primary" id="btn-new-user">
+									<button formaction="${newurl}" class="btn  btn-primary btn-xs" id="btn-new-user">
 										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> New
 									</button>
 								</div>

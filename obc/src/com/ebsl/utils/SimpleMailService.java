@@ -7,14 +7,10 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import com.ebsl.data.model.User;
-import com.sun.media.jfxmedia.track.Track.Encoding;
-
 import javax.mail.internet.MimeMessage;
 
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 public class SimpleMailService {
 
@@ -37,7 +33,8 @@ public class SimpleMailService {
 
     private void sendConfirmationEmail(final String destEmailAddress) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
+            @Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                 message.setTo(destEmailAddress);
                 message.setFrom("webmaster@csonth.gov.uk"); // could be parameterized...

@@ -17,7 +17,7 @@
         <Logger name="org.hibernate.search" level="debug"/>
           <Logger name="org.apache.lucene" level="debug"/> -->
  <!-- <Logger name="org.springframework.beans.factory" level="debug"/>  -->
-         <Logger name="org.springframework" level="debug"/> 
+         <Logger name="org.springframework" level="info"/> 
 <!--         <Logger name="org.apache.shiro" level="info"/> -->
         <Root level="warn">
             <AppenderRef ref="STDOUT"/>

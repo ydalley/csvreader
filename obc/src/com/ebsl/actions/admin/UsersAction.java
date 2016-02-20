@@ -32,10 +32,6 @@ import com.ebsl.service.UserService;
 import com.ebsl.utils.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
-import com.opensymphony.xwork2.validator.annotations.EmailValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-import com.opensymphony.xwork2.validator.annotations.Validations;
-import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 @Controller
 @Scope("prototype")
@@ -70,6 +66,7 @@ public class UsersAction extends ActionSupport implements Preparable,
 	}
 
 	// GET /users/
+	@Override
 	@Action(value = "/admin/users/index",results = {@Result(name="index",location="/admin/users-index.jsp")})	
 	public String execute() throws Exception {
 		return "index";

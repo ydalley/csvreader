@@ -27,22 +27,67 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="panel-group" id="accordion">
+					
 						<div class="panel panel-default">
 							<div class="panel-heading">
 							<s:url action="show" includeContext="true"  var="showurl"/>
 							<s:url action="new" includeContext="true" var="newurl"/>
 								<div class="btn-toolbar" role="toolbar" aria-label="payment toolbar">
-									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn  btn-primary"
+									<button formaction="${showurl}" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-primary"
 										id='btn-show-payment' disabled>
 										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Open
 									</button>
-									<button formaction="${newurl}" class="btn  btn-primary" id="btn-new-payment">
+									<button formaction="${newurl}" class="btn  btn-primary btn-xs" id="btn-new-payment">
 										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> New
+									</button>
+									<button class="btn  btn-primary btn-xs accordion-toggle collapsed" id="btn-new-payment" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+										<span class="glyphicon glyphicon-search" aria-hidden="true"></span> search
 									</button>
 								</div>
 							</div>
 
 						</div>
+						<div class="panel panel-default">
+                                    <div id="collapseOne" class="accordion-body collapse">
+								<s:form role="form" id="form-find">
+									<div class="panel-body">
+
+										<div class="form-group col-lg-4">
+											<label>Merchant ID</label> <input class="form-control" name="merchantId"
+												value="${merchantId}" />
+										</div>
+										<div class="form-group col-lg-4">
+											<label>Payment Amount</label> <input class="form-control" name="paymentAmount"
+												value="${paymentAmount}" />
+										</div>
+										<div class="form-group col-lg-4">
+											<label>Payment Amount(max)</label> <input class="form-control" name="paymentAmountl"
+												value="${paymentAmountl}" />
+										</div>
+										<div class="form-group col-lg-4">
+											<label>Invoice Number</label> <input class="form-control" name="invoiceNumber"
+												value="${invoiceNumber}" />
+										</div>
+										<div class="form-group col-lg-4">
+										<s:date name="dispute.transactionDate" var="fdate" format="yyyy-MM-dd" />
+											<label>From Date</label> <input type="date" class="form-control" name="fromDate"
+												value="${fdate}" />
+										</div>
+
+										<div class="form-group col-lg-4">
+										<s:date name="dispute.transactionDate" var="tdate" format="yyyy-MM-dd" />
+											<label>To Date</label> <input type="date" class="form-control" name="toDate"
+												value="${tdate}"/>
+										</div>
+										<div class="text-right">
+										<button class="btn  btn-primary  btn-outline btn-xs" id="btn-find">
+												<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Go
+											</button>
+										</div>
+									</div>
+								</s:form>
+							</div>
+                        </div>
 						<div class="panel panel-default">
 							<!-- /.panel-heading -->
 							<div class="panel-body">
@@ -64,7 +109,7 @@
 								<s:url action="edit" includeContext="true" var="disputeurl"/>
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 									aria-hidden="true">
-									<div class="modal-dialog modal-lg"">
+									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -73,7 +118,7 @@
 											<div class="modal-body"></div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-												<button type="button" formaction="${disputeurl}" class="btn btn-primary" id="btn-edit-code">Dispute</button>
+												<button type="button" formaction="${disputeurl}" class="btn btn-primary " id="btn-edit-code">Dispute</button>
 											</div>
 										</div>
 									</div>
@@ -128,16 +173,34 @@
 			window.location.href = link.attr("formaction") ;
 			//goto url
 		});
+		
+		$("#btn-find").on("click", function(e) {
+			e.preventDefault();
+			var link = $(e.target);
+			var table = $('#paymenttable').DataTable();
+			table.ajax.reload( null, false ); 
+			
+		});
 
 		$(document).ready(function() {
 			var table = $('#paymenttable').DataTable({
-
+				"bFilter" : false,
 				select : {
 					style : 'single'
 				},
 				"processing" : true,
+				"deferLoading": 0,
 				"serverSide" : true,
-				"ajax" : "paymentsj",
+				"ajax" : {
+					url :"paymentsj", 
+					"type": "POST",
+					"data": function ( d ) {
+		                var x = $("#form-find").serializeArray();
+					    $.each(x, function(i, field){
+					       d[field.name] = field.value ;
+					    });
+	            	}
+				},
 				"columns" : [ {
 					"data" : "merchantId"
 				}, {
@@ -146,7 +209,6 @@
 					"data" : "status"
 				} ]
 			});
-
 			table.on('select', function() {
 				if (table.rows({
 					selected : true
@@ -167,6 +229,7 @@
 					$('#btn-show-payment').removeAttr("disabled");
 				}
 			});
+			//$('#collapseOne').collapse("hide");
 		});
 	</script>
 	<s:include value="./footert.jsp" />

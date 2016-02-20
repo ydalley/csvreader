@@ -16,8 +16,6 @@ package com.ebsl.interceptors;
  * limitations under the License.
  */
 
-import java.util.Map;
-
 import com.ebsl.actions.UserAware;
 import com.ebsl.data.model.User;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -33,15 +31,18 @@ public class CurrentUserInterceptor implements Interceptor
 {
     private static transient final Logger LOGGER = LoggerFactory.getLogger(CurrentUserInterceptor.class);
 
-    public void destroy()
+    @Override
+	public void destroy()
     {
     }
 
-    public void init()
+    @Override
+	public void init()
     {
     }
 
-    public String intercept(ActionInvocation actionInvocation) throws Exception
+    @Override
+	public String intercept(ActionInvocation actionInvocation) throws Exception
     {
     	try {
 			Subject shiroUser = SecurityUtils.getSubject();
