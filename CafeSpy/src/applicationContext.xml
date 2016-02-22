@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+
+	<context:component-scan base-package="net.cafe" />
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:system.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Required for security annotations to work in this servlet -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+
+
+
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${db.driver}" />
+		<!-- <property name="url" value="jdbc:mariadb://${db.host}:${db.port}/${db.schmema}" 
+			/> -->
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQL5Dialect
+				</prop>
+				<prop key="hibernate.c3p0.minPoolSize">5</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<prop key="hibernate.c3p0.maxPoolSize">100</prop>
+				<prop key="hibernate.c3p0.timeout">600</prop>
+				<prop key="hibernate.c3p0.max_statement">50</prop>
+				<prop key="hibernate.c3p0.testConnectionOnCheckout">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop> -->
+				<prop key="show_sql">true</prop>
+				<prop key="use_sql_comments">true</prop>
+				<prop key="format_sql">true</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>net.cafe.data.model</value>
+			</list>
+		</property>
+
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myRealm" />
+	</bean>
+
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<bean id="myRealm" class="net.cafe.security.CafeInlineRealm">
+		<property name="credentialsMatcher">
+			<bean id="matcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" >
+				<property name="hashAlgorithmName" value="SHA-256"/>
+				<property name="storedCredentialsHexEncoded" value="true"/>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
+		depends-on="lifecycleBeanPostProcessor"/> -->
+
+	<!-- <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"> -->
+	<!-- <property name="securityManager" ref="securityManager"/> -->
+	<!-- </bean> -->
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.jsp" />
+		<property name="successUrl" value="/index.jsp" />
+		<property name="filterChainDefinitions">
+			<value>
+				/login.jsp = authc
+				/logout =logout
+				/css/** = anon
+				/fonts/** = anon
+				/js/** = anon
+				/** = authc
+			</value>
+		</property>
+	</bean>
+
+
+
+
+</beans>
