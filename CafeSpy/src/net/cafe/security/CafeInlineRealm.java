@@ -57,20 +57,5 @@ public class CafeInlineRealm extends AuthorizingRealm {
 		return info;
 	}
 
-	@Override
-	protected void checkPermissions(Collection<Permission> arg0,
-			AuthorizationInfo arg1) {
-		// TODO Auto-generated method stub
-		super.checkPermissions(arg0, arg1);
-	}
-
-	@Override
-	protected boolean[] isPermitted(List<Permission> arg0,
-			AuthorizationInfo arg1) {
-		// TODO Auto-generated method stub
-		return super.isPermitted(arg0, arg1);
-	}
-
-	
 	
 }

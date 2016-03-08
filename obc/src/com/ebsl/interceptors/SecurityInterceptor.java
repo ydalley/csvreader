@@ -74,7 +74,11 @@ public class SecurityInterceptor implements Interceptor
             }
 			return Action.ERROR;
 		}catch (UnauthenticatedException e){
-			e.printStackTrace();
+			SecurityUtils.getSecurityManager().logout(shiroUser);
+			Object action = actionInvocation.getAction ();
+            if (action instanceof ActionSupport) {
+                ((ActionSupport) action).addActionError ("expired session, login again");
+            }
 			return Action.LOGIN;
 		}
 		return actionInvocation.invoke();

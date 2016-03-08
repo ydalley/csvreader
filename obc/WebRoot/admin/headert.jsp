@@ -54,7 +54,7 @@
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.jsp">OBC Admin Console</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/admin/index">One View Admin Console</a>
 			</div>
 			<!-- /.navbar-header -->
 			<ul class="nav navbar-top-links navbar-right"> ${loggedOnUser.firstName}  ${loggedOnUser.lastName}
@@ -77,15 +77,6 @@
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
-						<li class="sidebar-search">
-							<div class="input-group custom-search-form">
-								<input class="form-control" placeholder="Search..." type="text"> <span class="input-group-btn">
-									<button class="btn btn-default" type="button">
-										<i class="fa fa-search"></i>
-									</button>
-								</span>
-							</div> <!-- /input-group -->
-						</li>
 						<li><a href="${pageContext.request.contextPath}/admin/users"><i class="fa fa-users"></i> Users</a></li>
 						<li><a href="${pageContext.request.contextPath}/admin/payments/index"><i class="fa fa-money"></i>
 								Payments</a></li>

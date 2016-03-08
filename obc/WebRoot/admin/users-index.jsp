@@ -167,6 +167,7 @@
 				},
 				"processing" : true,
 				"serverSide" : true,
+				"ordering": false,
 				"ajax" : "usersj",
 				"columns" : [ {
 					"data" : "firstName"
@@ -176,7 +177,24 @@
 					"data" : "email"
 				}, {
 					"data" : "status"
-				} ]
+				} ],
+				"columnDefs" : [ {
+				"targets" : 3,
+				"className": "dt-center",
+				"data" : "Status",
+				"render" : function(data, type, full, meta) {
+					if (type === 'display') {
+						if (data == 'E') {
+							return "<span class='fa fa-check-circle dt-body-center' style='color: green;'></span>";
+						} else if (data == 'D') {
+							return "<span class='fa fa-times-circle' style='color: red;'></span>";
+						}else{
+							return "<span class='fa fa-question-circlen' style='color: red;'></span>";
+						}
+					}
+					return data;
+				}
+			} ]
 			});
 
 			table.on('select', function() {

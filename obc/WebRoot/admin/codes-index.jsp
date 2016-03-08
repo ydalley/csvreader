@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<s:include value="./headert2.jsp" />
+<s:include value="./headert.jsp" />
 <!-- Page Content -->
 <div id="page-wrapper">
 	<div class="container-fluid">
@@ -36,7 +36,7 @@
 										id='btn-show' disabled>
 										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Open
 									</button>
-									<button formaction="${newurl}" class="btn  btn-primary btn-xs" id="btn-new">
+									<button formaction="${newurl}" class="btn  btn-primary" id="btn-new">
 										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> New
 									</button>
 								</div>
@@ -46,7 +46,20 @@
 						<div class="panel panel-default">
 							<!-- /.panel-heading -->
 							<div class="panel-body">
-								<div id="CodeTableContainer"></div>
+								<div class="dataTable_wrapper">
+									<table class="table responsive table-striped table-bordered table-hover" id="obctable">
+										<thead>
+											<tr>
+												<th>Code</th>
+												<th>Type</th>
+												<th>Description</th>
+											</tr>
+										</thead>
+
+
+									</table>
+								</div>
+								<!-- /.table-responsive -->
 								<!-- Modal -->
 								<s:url action="edit"  var="editurl"/>
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -83,34 +96,75 @@
 		<!-- /#wrapper -->
 	</div>
 </div>
-	<script type="text/javascript">
-	
+	<script>
+		$(document).on('hidden.bs.modal', function(e) {
+			$(e.target).removeData('bs.modal');
+		});
+
+		$("#myModal").on(
+				"show.bs.modal",
+				function(e) {
+					var link = $(e.relatedTarget);
+					var dt = $('#obctable').DataTable();
+					var id = $(dt.row({
+						selected : true
+					}).node()).attr("id");
+					$(this).find(".modal-body").load(link.attr("formaction"),
+							'id=' + id);
+				});
+
+		$("#btn-edit").on("click", function(e) {
+			var link = $(e.target);
+			var dt = $('#obctable').DataTable();
+			var id = $(dt.row({
+				selected : true
+			}).node()).attr("id");
+			window.location.href = link.attr("formaction") + '?id=' + id;
+			//goto url
+		});
+		
+		$("#btn-new").on("click", function(e) {
+			var link = $(e.target);
+			window.location.href = link.attr("formaction") ;
+			//goto url
+		});
+
 		$(document).ready(function() {
-			$('#CodeTableContainer').jtable({
-				title : 'Codes',
-				actions : {
-					listAction : '/GettingStarted/PersonList',
-					createAction : '/GettingStarted/CreatePerson',
-					updateAction : '/GettingStarted/UpdatePerson',
-					deleteAction : '/GettingStarted/DeletePerson'
+			var table = $('#obctable').DataTable({
+
+				select : {
+					style : 'single'
 				},
-				fields : {
-					id : {
-						key : true,
-						list : false
-					},
-					code : {
-						title : 'Code',
-						width : '30%'
-					},
-					type : {
-						title : 'Type',
-						width : '30%'
-					},
-					description : {
-						title : 'Description',
-						width : '40%'
-					}
+				"processing" : true,
+				"serverSide" : true,
+				"ajax" : "codesj",
+				"columns" : [ {
+					"data" : "code"
+				}, {
+					"data" : "type"
+				}, {
+					"data" : "description"
+				} ]
+			});
+
+			table.on('select', function() {
+				if (table.rows({
+					selected : true
+				}).indexes().length === 0) {
+					$('#btn-show').attr("disabled", true);
+				} else {
+					$('#btn-show').removeAttr("disabled");
+				}
+
+			});
+
+			table.on('deselect', function() {
+				if (table.rows({
+					selected : true
+				}).indexes().length === 0) {
+					$('#btn-show').attr("disabled", true);
+				} else {
+					$('#btn-show').removeAttr("disabled");
 				}
 			});
 		});

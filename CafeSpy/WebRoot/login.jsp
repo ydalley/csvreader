@@ -38,23 +38,6 @@
     </style>
 
     <script>
-
-        /*
-        * Do not use this is a google analytics fro Metro UI CSS
-        * */
-        if (window.location.hostname !== 'localhost') {
-
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-58849249-3', 'auto');
-            ga('send', 'pageview');
-
-        }
-
-
         $(function(){
             var form = $(".login-form");
 
@@ -70,13 +53,10 @@
 </head>
 <body class="bg-darkTeal">
 <s:if test="%{#request.shiroLoginFailure != null}">
-		<div>
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			Login attempt was unsuccessful
-		</div>
+		<s:hidden name="loginstatus" id="loginstatus" value="%{#request.shiroLoginFailure}"/>
 	</s:if>
     <div class="login-form padding20 block-shadow">
-       <s:form role="form" action="" method="post" namespace="/" >
+       <s:form role="form">
             <h1 class="text-light">Login to Cafe Admin</h1>
             <hr class="thin"/>
             <br />
@@ -102,27 +82,23 @@
     </div>
 
     <!-- hit.ua -->
-    <a href='http://hit.ua/?x=136046' target='_blank'>
-        <script language="javascript" type="text/javascript"><!--
-        Cd=document;Cr="&"+Math.random();Cp="&s=1";
-        Cd.cookie="b=b";if(Cd.cookie)Cp+="&c=1";
-        Cp+="&t="+(new Date()).getTimezoneOffset();
-        if(self!=top)Cp+="&f=1";
-        //--></script>
-        <script language="javascript1.1" type="text/javascript"><!--
-        if(navigator.javaEnabled())Cp+="&j=1";
-        //--></script>
-        <script language="javascript1.2" type="text/javascript"><!--
-        if(typeof(screen)!='undefined')Cp+="&w="+screen.width+"&h="+
-        screen.height+"&d="+(screen.colorDepth?screen.colorDepth:screen.pixelDepth);
-        //--></script>
-        <script language="javascript" type="text/javascript"><!--
-        Cd.write("<img src='http://c.hit.ua/hit?i=136046&g=0&x=2"+Cp+Cr+
-        "&r="+escape(Cd.referrer)+"&u="+escape(window.location.href)+
-        "' border='0' wi"+"dth='1' he"+"ight='1'/>");
-        //--></script></a>
+    
     <!-- / hit.ua -->
-
-
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#loginstatus').each(function(index,element) {
+				var mess = $(element).val();
+				pushMessage(mess);
+			});
+		});
+		function pushMessage(t) {
+			var mes = 'Info|Implement independently';
+			$.Notify({
+				caption : "Login attempt was unsuccessful",
+				content : t,
+				type : "alert",keepOpen: true
+			});
+		}
+	</script>
 </body>
 </html>

@@ -111,6 +111,7 @@
 				/css/** = anon
 				/fonts/** = anon
 				/js/** = anon
+				/config-browser/**=anon
 				/** = authc
 			</value>
 		</property>

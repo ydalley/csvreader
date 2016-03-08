@@ -146,6 +146,8 @@
 			$(e.target).removeData('bs.modal');
 		});
 
+		  
+    
 		$("#myModal").on(
 				"show.bs.modal",
 				function(e) {
@@ -207,7 +209,18 @@
 					"data" : "paymentAmount"
 				}, {
 					"data" : "status"
-				} ]
+				} ],"columnDefs" : [ {
+				"targets" : 0,
+				"data" : "Merchant Id",
+				"render" : function(data, type, full, meta) {
+					if (type === 'display') {
+						
+						return "<a  data-toggle='tooltip' title='Open' data-placement='right' href='#'>" + data +"</a>";
+						
+					}
+					return data;
+				}
+			} ]
 			});
 			table.on('select', function() {
 				if (table.rows({
@@ -231,5 +244,10 @@
 			});
 			//$('#collapseOne').collapse("hide");
 		});
+		
+		$('.tooltip-demo').tooltip({
+		        selector: "[data-toggle=tooltip]",
+		        container: "body"
+		    })
 	</script>
 	<s:include value="./footert.jsp" />

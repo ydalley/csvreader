@@ -23,9 +23,9 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/shiro-core-1.2.4.jar"/>
-	<classpathentry kind="lib" path="lib/shiro-spring-1.2.4.jar"/>
-	<classpathentry kind="lib" path="lib/shiro-web-1.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/shiro-core-1.2.4.jar" sourcepath="/Users/dallex/Documents/dev/shiro-root-1.2.4/core"/>
+	<classpathentry kind="lib" path="lib/shiro-spring-1.2.4.jar" sourcepath="/Users/dallex/Documents/dev/shiro-root-1.2.4/support/spring"/>
+	<classpathentry kind="lib" path="lib/shiro-web-1.2.4.jar" sourcepath="/Users/dallex/Documents/dev/shiro-root-1.2.4/web"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="lib/commons-dbcp2-2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-pool2-2.4.2.jar"/>
@@ -34,6 +34,7 @@
 	<classpathentry kind="lib" path="lib/log4j-core-2.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2-api-2.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-api-2.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjweaver-1.8.8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
