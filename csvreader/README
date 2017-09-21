@@ -1,0 +1,7 @@
+run application 
+
+java -jar csvreader.jar
+
+or 
+
+java -jar csvreader.jar [File Path]  (Remember to quote or escape spaces)
